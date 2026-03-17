@@ -91,8 +91,18 @@
         data: {
           id: id
         },
-        success: function(html) {
-          $('#contenedor-detalle').html(html);
+        success: function(respuesta) {
+          if (respuesta.status === 'success') {
+            let t = respuesta.data;
+            let html = `
+            <div class="card p-3">
+                <h2>${t.asunto}</h2>
+                <p>${t.descripcion}</p>
+                <small>Prioridad: ${t.prioridad}</small>
+            </div>
+        `;
+            $('#contenedor-detalle').html(html);
+          }
         },
         error: function() {
           alert("Error al cargar el detalle del ticket");

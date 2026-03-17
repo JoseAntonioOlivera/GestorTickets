@@ -6,28 +6,35 @@ class TicketController
 {
   public function index(): void
   {
-    // Obtenemos los tickets con sus categorías (usando el JOIN del modelo)
+    // Obtenemos los tickets con sus categorías
     $tickets = Ticket::all();
     require __DIR__ . '/views/tickets/index.php';
 
   }
 
   // Carga el detalle del ticket para el panel derecho (Llamada AJAX)
-  public function show(): void
-  {
+public function show(): void
+{
+    header('Content-Type: application/json');
+
     $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
     $ticket = Ticket::find($id);
     
     if (!$ticket) {
-      echo "<p class='p-3'>Selecciona una incidencia para ver su detalle.</p>";
-      return;
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Ticket no encontrado'
+        ]);
+        exit;
     }
+    echo json_encode([
+        'status' => 'success',
+        'data' => $ticket
+    ]);
+    
+    exit;
+}
 
-    // Aquí cargaríamos también el historial si lo tuvieras
-    // $historial = Historial::getByTicket($id); 
-
-    require __DIR__ . '/views/tickets/detalle.php';
-  }
 
   public function create(): void
   {
