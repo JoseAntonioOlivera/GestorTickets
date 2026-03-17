@@ -1,0 +1,272 @@
+body {
+    background-color: #0079bf;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.btn-nuevo {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.btn-nuevo:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.contenedor {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.columna {
+    flex: 1;
+    background-color: #ebedf0;
+    border-radius: 10px;
+    padding: 12px;
+    min-height: 200px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.columna h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 5px 10px 15px;
+    color: #172b4d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tarea {
+    cursor: grab;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    margin-bottom: 10px;
+    padding: 15px;
+}
+
+.tarea h3 {
+    font-size: 15px;
+    margin: 0 0 8px 0;
+    color: #172b4d;
+    text-transform: none;
+}
+
+.tarea p {
+    font-size: 14px;
+    color: #5e6c84;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px solid #eee;
+}
+
+.acciones button, .acciones a {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    text-decoration: none;
+    padding: 0;
+}
+
+.sortable-ghost {
+    opacity: 0.3;
+    background: #cbd2d9 !important;
+}
+
+.crearTarea {
+    margin-bottom: 25px;
+    padding: 10px 0;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.btn-trello {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-trello span {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.btn-trello:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+    color: white;
+}
+
+.btn-trello:active {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(0);
+}
+
+.titulo-tablero {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 10px, 0, 10px;
+    letter-spacing: -0.5px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.body-formulario {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #0079bf;
+}
+
+.contenedor-formulario {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+}
+
+.tarjeta-form {
+    background: #ebedf0;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.tarjeta-form h1 {
+    font-size: 20px;
+    color: #172b4d;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.campo {
+    margin-bottom: 20px;
+}
+
+.campo label {
+    display: block;
+    font-weight: 600;
+    color: #5e6c84;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.campo input, 
+.campo textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #dfe1e6;
+    border-radius: 5px;
+    font-size: 16px;
+    background: #fff;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.campo input:focus, 
+.campo textarea:focus {
+    outline: none;
+    border-color: #0079bf;
+}
+
+.campo textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+.acciones-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-guardar {
+    background-color: #5aac44;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-guardar:hover {
+    background-color: #519839;
+}
+
+.btn-cancelar {
+    text-align: center;
+    text-decoration: none;
+    color: #5e6c84;
+    font-size: 14px;
+    padding: 5px;
+}
+
+.btn-cancelar:hover {
+    color: #172b4d;
+    text-decoration: underline;
+}
+
+.alerta-error {
+    background-color: #ef5350;
+    color: white;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.select-trello {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #dfe1e6;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: white;
+    color: #172b4d;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 1em;
+}
+
+.select-trello:focus {
+    outline: none;
+    border-color: #0079bf;
+}
+
+
