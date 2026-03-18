@@ -250,6 +250,8 @@ body {
 
 .select-trello {
     width: 100%;
+    display: block !important;
+    min-height: 45px;
     padding: 12px;
     border: 2px solid #dfe1e6;
     border-radius: 5px;

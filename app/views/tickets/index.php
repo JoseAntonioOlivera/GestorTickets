@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Helpdesk | Mesa de Ayuda</title>
-  <link rel="stylesheet" href="../../Trello/css/style.css">
+  <link rel="stylesheet" href="css/style.css">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <style>
     /* Estructura de dos columnas: Lista y Detalle */
@@ -63,17 +63,14 @@
   </header>
 
   <div class="layout-helpdesk">
-    <!-- COLUMNA IZQUIERDA: LISTADO -->
+    <!-- COLUMNA IZQUIERDA: LISTADO (Ahora vacío para llenarlo con AJAX) -->
     <div class="panel-lista" id="lista-tickets">
       <h3>Incidencias Reportadas</h3>
-      <?php foreach ($tickets as $t): ?>
-        <div class="ticket-item prioridad-<?= $t['prioridad'] ?>" onclick="verDetalle(<?= $t['id'] ?>)">
-          <small class="text-muted"><?= $t['categoria'] ?> | #<?= $t['id'] ?></small>
-          <h4 style="margin: 5px 0;"><?= htmlspecialchars($t['asunto']) ?></h4>
-          <span class="badge-estado"><?= $t['estado'] ?></span>
-        </div>
-      <?php endforeach; ?>
+      <div id="contenedor-items">
+        <!-- Aquí se inyectarán los tickets -->
+      </div>
     </div>
+
 
     <!-- COLUMNA DERECHA: DETALLE -->
     <div class="panel-detalle" id="contenedor-detalle">
@@ -84,6 +81,35 @@
   </div>
 
   <script>
+    $(document).ready(function() {
+      actualizarListaIzquierda();
+    });
+
+    function actualizarListaIzquierda() {
+      $.ajax({
+        url: 'index.php?action=getTicketsJson',
+        method: 'GET',
+        dataType: 'json',
+        success: function(respuesta) {
+          if (respuesta.status === 'success') {
+            let html = '';
+            respuesta.data.forEach(t => {
+              html += `
+                        <div class="ticket-item prioridad-${t.prioridad}" onclick="verDetalle(${t.id})">
+                            <small class="text-muted">${t.categoria} | #${t.id}</small>
+                            <h4 style="margin: 5px 0;">${t.asunto}</h4>
+                            <span class="badge-estado">${t.estado}</span>
+                        </div>`;
+            });
+            $('#contenedor-items').html(html);
+          }
+        },
+        error: function() {
+          console.log("Error al cargar la lista de tickets");
+        }
+      });
+    }
+
     function verDetalle(id) {
       $.ajax({
         url: 'index.php?action=show',
@@ -91,21 +117,30 @@
         data: {
           id: id
         },
+        dataType: 'json',
         success: function(respuesta) {
           if (respuesta.status === 'success') {
             let t = respuesta.data;
+            let opciones = ['Abierta', 'En curso', 'Resuelta'].map(e =>
+              `<option value="${e}" ${t.estado === e ? 'selected' : ''}>${e}</option>`
+            ).join('');
+
             let html = `
-            <div class="card p-3">
-                <h2>${t.asunto}</h2>
-                <p>${t.descripcion}</p>
-                <small>Prioridad: ${t.prioridad}</small>
-            </div>
-        `;
+                    <div class="card p-3">
+                        <h2>Asunto: ${t.asunto}</h2>
+                        <hr>
+                        <p><strong>Descripción:</strong> ${t.descripcion}</p>
+                        <p><strong>Usuario:</strong> ${t.usuario || 'No asignado'}</p>
+                        <p><strong>Prioridad:</strong> ${t.prioridad}</p>
+                        <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                            <label style="display:block; margin-bottom:10px; font-weight:bold;">Estado:</label>
+                            <select class="select-trello" onchange="cambiarEstado(${t.id}, this.value)">
+                                ${opciones}
+                            </select>
+                        </div>
+                    </div>`;
             $('#contenedor-detalle').html(html);
           }
-        },
-        error: function() {
-          alert("Error al cargar el detalle del ticket");
         }
       });
     }
@@ -118,25 +153,9 @@
           id: id,
           estado: nuevoEstado
         },
-        success: function(html) {
-          console.log("Estado cambiado correctamente.");
+        success: function() {
+          // Refrescamos la lista para que el badge cambie
           actualizarListaIzquierda();
-        },
-        error: function() {
-          alert("Error al cargar el detalle del ticket");
-        }
-      });
-    }
-
-    function actualizarListaIzquierda() {
-      $.ajax({
-        url: 'index.php?action=index',
-        method: 'GET',
-        success: function(html) {
-          let nuevaLista = $(html).find('#lista-tickets').html();
-          $('#lista-tickets').html(nuevaLista);
-
-          console.log("Lista de la izquierda actualizada sin recargar.");
         }
       });
     }
